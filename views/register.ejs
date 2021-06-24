@@ -33,7 +33,7 @@
                     <input type="password" name="passwordCheck" class="confirmPasswordInput" placeholder="password(over 8 chars)">
                 </div>
                 <p><button type="submit" class="submitBtn">Register</button></p>
-                <div class="notThis"><a href="http://localhost:4001/signin">Login</a></div>
+                <div class="notThis"><a href="http://localhost:<%= process.env.PORT %>/signin">Login</a></div>
             </form>
             <% if(err !== ''){%>
             <p><%= err %></p>

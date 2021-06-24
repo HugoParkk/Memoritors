@@ -18,7 +18,18 @@ const userSchema = mongoose.Schema({
     profileImg: {
         type: String,
         default: 'default.jpg'
-    }
+    },
+    memoList: [{
+        title: {
+            type: String,
+            default: 'New Memo',
+            required: true
+        },
+        value: {
+            type: String,
+            default: 'Welcome'
+        }
+    }]
 });
 
 userSchema.statics.findByEmail = function(email) {

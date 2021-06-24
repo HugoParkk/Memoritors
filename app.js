@@ -43,9 +43,9 @@ app.post('/isauth', jwtMiddleware, async (req, res) => {
 app.get('/', jwtMiddleware, async(req, res) => {
   let token = req.cookies;
   console.log(req.user)
-
+  let text = {text: '# Sample Markdown- one- two- three'}
   if(token.x_auth != '') {
-      res.render('index', { user: req.user })
+      res.render('index', { user: req.user, text: text.text })
   } else if(token.x_auth == '' || !token.x_auth) {
       res.redirect('/signin')
   }

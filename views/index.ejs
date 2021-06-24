@@ -76,6 +76,7 @@
             height: 8vh;
             border-radius: 10000px;
         }
+
         .dropBtn {
             background-color: rgb(218, 218, 218);
             color: black;
@@ -104,6 +105,7 @@
             font-size: 15px;
             background-color: white;
         }
+
         .dropdown-content form {
             border-radius: 10px;
             border: none;
@@ -111,6 +113,7 @@
             font-size: 15px;
             background-color: white;
         }
+
         .dropdown-content button:hover {
             background-color: #ddd;
         }
@@ -135,9 +138,8 @@
                     <form action="/signout" method="post" style="margin-bottom: .6vh;">
                         <button class="logout">Logout</button>
                     </form>
-                    <form action="/uploadImage/<%= user.name %>" enctype="multipart/form-data"
-                        method="post">
-                        <input class="changeI" type="file" name="attachment">
+                    <form action="/uploadImage/<%= user.name %>" enctype="multipart/form-data" method="post">
+                        <input class="changeI" type="file" name="attachment" required>
                         <button class="changeI" type="submit" style="margin-top: .6vh;">Change Image</button>
                     </form>
                 </div>
@@ -147,31 +149,41 @@
                 <button>-</button>
                 <br>
                 <select name="list" class="list">
-                    <option value="">Memo 1</option>
-                    <option value="">Memo 2</option>
-                    <option value="">Memo 3</option>
+                    <% for (let i = 0; i < user.memoList.length; i++) { %>
+                        <option value=""><%= user.memoList[i].title %> </option>
+                    <% } %> 
                 </select>
             </div>
 
 
         </div>
         <div class="mdeContainer">
-            <h1>Memo 1</h1>
+            <h1><%= user.memoList[0].title %> </h1>
             <textarea id="editor"></textarea>
         </div>
     </div>
-
     <script>
         const editMde = new SimpleMDE({
             element: document.getElementById('editor'),
             spellChecker: false,
-            initialValue: '## Stuff.... ',
             hideIcons: ['guide', 'fullscreen', 'side-by-side']
             // guide implmentation is open to you
             // fullscreen and sxs muss up layout
         });
-        editMde.value('# Sample Markdown\n- one\n- two\n- three');
+        editMde.value('<%= user.memoList[0].value %>');
+        
+        
 
+        let data = editMde.value();
+
+        function download(content, fileName, contentType) {
+            var a = document.createElement("a");
+            var file = new Blob([content], { type: contentType });
+            a.href = URL.createObjectURL(file);
+            a.download = fileName;
+            a.click();
+        }
+        // download(data, 'data.txt', 'text/plain');
 
         let dropBtn = document.querySelector('.dropBtn');
         dropBtn.addEventListener('click', function () {
@@ -181,7 +193,9 @@
             else
                 dropdown.style.display = 'block';
         });
+        
     </script>
+    <!-- <script src="./script/index.js"></script> -->
 </body>
 
 </html>

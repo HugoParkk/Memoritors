@@ -54,8 +54,12 @@ exports.signUp = async (req, res, next) => { // signUp 하는 로직
 
       const user = await new User({
         email: email,
-        name,
-        password,
+        name: name,
+        password: password,
+        memoList: [{
+          title: 'New Memo',
+          value: 'Welcome'
+        }]
       });
 
       user.save((err) => {
