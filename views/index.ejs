@@ -8,6 +8,15 @@
     <title>Document</title>
 
     <style>
+        * {
+            margin: 0;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: row;
+        }
+
         h1 {
             margin-top: 0;
             background-color: #ccc;
@@ -16,16 +25,14 @@
             line-height: 80px;
             font-size: 40px;
             margin-bottom: 0;
+
         }
 
         .mdeContainer {
-            display: inline-block;
-            vertical-align: top;
-            width: 100%;
-        }
-
-        .mdeContainer CodeMirror {
-            height: 1000px;
+            /* display: inline-block; */
+            /* vertical-align: top; */
+            /* margin-left: 14vw; */
+            width: 70vw;
         }
 
         button {
@@ -42,7 +49,7 @@
             border: 1px solid rgb(104, 104, 104);
             border-radius: 10px;
             font-size: 20px;
-            width: 200px;
+            /* width: 200px; */
             height: 50px;
         }
 
@@ -53,33 +60,59 @@
             background-color: #ccc;
         }
 
-        .grid2 {
-            margin-left: 100px;
-            padding-left: 50px;
-            border-left: 1px solid rgb(90, 90, 90);
+        .grid1 {
+            width: 18vw;
+            margin: 1vw 1vh;
         }
 
-        #container {
-            display: grid;
-            grid-template-columns: 150px 1fr;
-        }
 
         .user {
-            font-size: 20px;
-        }
-
-        textarea {
-            width: 100px;
-        }
-
-        .grid1 {
-            margin: 10px;
+            font-size: 1.4rem;
+            /* text-align: center; */
         }
 
         #profileImg {
             width: 8vh;
             height: 8vh;
             border-radius: 10000px;
+        }
+        .dropBtn {
+            background-color: rgb(218, 218, 218);
+            color: black;
+            font-size: 18px;
+            border: none;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 20px;
+        }
+
+        .dropdown-content button {
+            border: none;
+            width: 200px;
+            font-size: 15px;
+            background-color: white;
+        }
+        .dropdown-content form {
+            border-radius: 10px;
+            border: none;
+            width: 200px;
+            font-size: 15px;
+            background-color: white;
+        }
+        .dropdown-content button:hover {
+            background-color: #ddd;
         }
     </style>
 
@@ -92,32 +125,63 @@
     <div id="container">
         <div class="grid1">
             <img id="profileImg" src="http://localhost:3000/uploadImage/<%= user.profileImg %> " alt="">
-            <form action="/uploadImage/<%= user.name %>" enctype="multipart/form-data" method="post">
-                <input type="file" name="attachment">
-                <button type="submit">Upload</button>
-            </form>
-            <p class="user"><%= user.name %> </p>
-            <form action="/signout" method="post">
-                <button>Logout</button>
-            </form>
-            <p><button>+</button>
-                <button>-</button>
+            <p class="user">
+                <%= user.name %>
             </p>
-            <select name="list" class="list">
-                <option value="">Memo 1</option>
-                <option value="">Memo 2</option>
-                <option value="">Memo 3</option>
-            </select>
-        </div>
-        <div class="grid2">
-            <h1>Memo 1</h1>
-            <div class="mdeContainer">
-                <textarea id="editor"></textarea>
+            <hr>
+            <div class="dropdown">
+                <button class="dropBtn">▼</button>
+                <div class="dropdown-content">
+                    <form action="/signout" method="post" style="margin-bottom: .6vh;">
+                        <button class="logout">Logout</button>
+                    </form>
+                    <form action="/uploadImage/<%= user.name %>" enctype="multipart/form-data"
+                        method="post">
+                        <input class="changeI" type="file" name="attachment">
+                        <button class="changeI" type="submit" style="margin-top: .6vh;">Change Image</button>
+                    </form>
+                </div>
             </div>
+            <div>
+                <button>+</button>
+                <button>-</button>
+                <br>
+                <select name="list" class="list">
+                    <option value="">Memo 1</option>
+                    <option value="">Memo 2</option>
+                    <option value="">Memo 3</option>
+                </select>
+            </div>
+
+
+        </div>
+        <div class="mdeContainer">
+            <h1>Memo 1</h1>
+            <textarea id="editor"></textarea>
         </div>
     </div>
 
-    <script src="./script/index.js"></script>
+    <script>
+        const editMde = new SimpleMDE({
+            element: document.getElementById('editor'),
+            spellChecker: false,
+            initialValue: '## Stuff.... ',
+            hideIcons: ['guide', 'fullscreen', 'side-by-side']
+            // guide implmentation is open to you
+            // fullscreen and sxs muss up layout
+        });
+        editMde.value('# Sample Markdown\n- one\n- two\n- three');
+
+
+        let dropBtn = document.querySelector('.dropBtn');
+        dropBtn.addEventListener('click', function () {
+            let dropdown = document.querySelector('.dropdown-content');
+            if (dropdown.style.display == 'block')
+                dropdown.style.display = 'none';
+            else
+                dropdown.style.display = 'block';
+        });
+    </script>
 </body>
 
 </html>
