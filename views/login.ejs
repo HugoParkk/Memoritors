@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../style/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body class="formBody">
+    <div class="formWrap">
+        <div class="title"><a href="#">Memoritors</a></div>
+        <div class="form">
+            <form action="/signin" method="post">
+                <p class="authBigTxt">Login</p>
+                <div class="authInputForm">
+                    <p>Email</p>
+                    <input type="email" name="email" class="emailInput" placeholder="example@example.com">
+                </div>
+                <div class="authInputForm">
+                    <p>Password</p>
+                    <input type="password" name="password" class="passwordInput" placeholder="●●●●●●●●">
+                </div>
+                <p><button type="submit" class="submitBtn">Login</button></p>
+                <div class="notThis"><a href="http://localhost:4001/signup">Register</a></div>
+            </form>
+            <% if(err !== ''){%>
+            <p><%= err %></p>
+            <% } %> 
+        </div>
+    </div>
+</body>
+
+</html>

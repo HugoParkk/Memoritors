@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../style/index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body class="formBody">
+    <div class="formWrap">
+        <div class="title"><a href="#">Memoritors</a></div>
+        <div class="form">
+            <form action="/signup" method="post">
+                <p class="authBigTxt">Register</p>
+                <div class="authInputForm">
+                    <p>Email</p>
+                    <input type="email" name="email" class="emailInput" placeholder="example@example.com">
+                </div>
+                <div class="authInputForm">
+                    <p>Username</p>
+                    <input type="text" name="name" class="usernameInput" placeholder="username">
+                </div>
+                <div class="authInputForm">
+                    <p>Password</p>
+                    <input type="password" name="password" class="passwordInput" placeholder="password(over 8 chars)">
+                </div>
+                <div class="authInputForm">
+                    <p>Confirm Password</p>
+                    <input type="password" name="passwordCheck" class="confirmPasswordInput" placeholder="password(over 8 chars)">
+                </div>
+                <p><button type="submit" class="submitBtn">Register</button></p>
+                <div class="notThis"><a href="http://localhost:4001/signin">Login</a></div>
+            </form>
+            <% if(err !== ''){%>
+            <p><%= err %></p>
+            <% } %> 
+        </div>
+    </div>
+</body>
+
+</html>

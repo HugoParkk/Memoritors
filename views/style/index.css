@@ -1,0 +1,119 @@
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(135deg, #654ea3, #eaafc8);
+    font-family:'Roboto';
+}
+
+.formBody {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Roboto';
+}
+
+.formWrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 46vh;
+    box-shadow: 0 10px 20px rgb(0 0 0 / 20%), 0 6px 6px rgb(0 0 0 / 25%);
+    border-radius: 20px;
+}
+
+.title {
+    background: slateblue;    
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.title>a {
+    font-family:'Roboto';
+    font-weight: bold;
+    font-size: 2.4rem;
+    /* font-family: ; */
+    text-decoration: none;
+    color: white;
+    letter-spacing: .2vh;
+}
+
+.form {
+    background: ivory;
+    padding: 2rem;
+    height: auto;
+    text-align: center;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.authBigTxt {
+    font-family:'Roboto';
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #343a40;
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+.authInputForm p {
+    font-weight: bold;
+    margin-left: 85px;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.notThis {
+    text-align: center;
+}
+.notThis a {
+    color: black;
+    font-weight: bolder;
+}
+.submitBtn {
+    font-family:'Roboto';
+    font-weight: bold;
+    width: 206px;
+    height: 45px;
+    background-color: white;
+    border: 1px solid gray;
+    margin-top: 10px;
+}
+
+.submitBtn:hover {
+    background-color: rgb(228, 228, 228);
+}
+
+.emailInput, .passwordInput, .usernameInput, .confirmPasswordInput, .passwordInput2 {
+    width: 200px;
+    height: 40px;
+    border: 1px solid gray;
+}
+
+input::placeholder {
+    text-align: center;
+}
+
+.emailInput::placeholder {
+    font-size: 15px;
+}
+
+.usernameInput::placeholder {
+    font-size: 15px;
+}
+
+.passwordInput::placeholder {
+    font-size: 15px;
+}
+
+.confirmPasswordInput {
+    font-size: 15px;
+}
