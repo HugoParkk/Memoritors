@@ -91,7 +91,11 @@
 <body>
     <div id="container">
         <div class="grid1">
-            <img id="profileImg" src="http://localhost:4001/uploadImage/<%= user.profileImg %> " alt="">
+            <img id="profileImg" src="http://localhost:3000/uploadImage/<%= user.profileImg %> " alt="">
+            <form action="/uploadImage/<%= user.name %>" enctype="multipart/form-data" method="post">
+                <input type="file" name="attachment">
+                <button type="submit">Upload</button>
+            </form>
             <p class="user"><%= user.name %> </p>
             <form action="/signout" method="post">
                 <button>Logout</button>
@@ -113,17 +117,7 @@
         </div>
     </div>
 
-    <script>
-        const editMde = new SimpleMDE({
-            element: document.getElementById('editor'),
-            spellChecker: false,
-            initialValue: '## Stuff.... ',
-            hideIcons: ['guide', 'fullscreen', 'side-by-side']
-            // guide implmentation is open to you
-            // fullscreen and sxs muss up layout
-        });
-        editMde.value('# Sample Markdown\n- one\n- two\n- three');
-    </script>
+    <script src="./script/index.js"></script>
 </body>
 
 </html>
