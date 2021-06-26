@@ -29,7 +29,11 @@ const userSchema = mongoose.Schema({
             type: String,
             default: 'Welcome'
         }
-    }]
+    }],
+    showing: {
+        type: String,
+        default: '0'
+    }
 });
 
 userSchema.statics.findByEmail = function(email) {

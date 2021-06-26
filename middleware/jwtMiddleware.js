@@ -22,7 +22,7 @@ const jwtMiddleware = (req, res, next) => {
             if (!user) {
                 return res
                     .status(404)
-                    .json({ isAuth: false, error: "token에 해당하는 유저가 없습니다" });
+                    .redirect('/signin');
             }
             if (user) {
                 req.user = user;

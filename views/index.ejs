@@ -31,25 +31,17 @@
             /* display: inline-block; */
             /* vertical-align: top; */
             /* margin-left: 14vw; */
-            width: 70vw;
+            width: 100%;
         }
 
         button {
             background-color: rgb(218, 218, 218);
             border: 1px solid rgb(218, 218, 218);
-            border-radius: 10px;
+            /* border-radius: 10px; */
             width: 40px;
             height: 40px;
             font-size: 40px;
             line-height: 10px;
-        }
-
-        select {
-            border: 1px solid rgb(104, 104, 104);
-            border-radius: 10px;
-            font-size: 20px;
-            /* width: 200px; */
-            height: 50px;
         }
 
         .line {
@@ -118,9 +110,11 @@
         }
 
         .saveBtn {
-            /* display: inline; */
+            background-color: #aaa;
+            width: fit-content;
             color: #535353;
-            padding: 0 0 1rem 1rem;
+            padding: .5rem 1rem;
+            margin: 0 0 1rem 2rem;
             cursor: pointer;
         }
 
@@ -128,6 +122,18 @@
             background-color: #ccc;
             display: flex;
             flex-direction: column;
+        }
+        .headBtn {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .memoList {
+            cursor: pointer;
+        }
+
+        .memoList:hover {
+            background-color: #ddd;
         }
     </style>
 
@@ -157,37 +163,30 @@
                 </div>
             </div>
             <div>
-                <form action="/newMemo/<%= user.name %>" method="post">
-                    <input type="text" name="title">
+                <form action="/newMemo/<%= user.name %>/<%= user.memoList.length %>" method="post">
+                    <input type="text" name="title" required>
                     <button type="submit">+</button>
                 </form>
-                
-                
-                
                 <br>
-                <select name="list" class="list">
-                    <% let Index %> 
-                    <% for (let i=0; i < user.memoList.length; i++) { %>
-                        <% Index = i %> 
-                        <option value="">
-                            <%= user.memoList[Index].title %>
-                        </option>
+                <div id="memoList">
+                    <% let i %>
+                    <% for (i=0; i < user.memoList.length; i++) { %>
+                        <h3 class="memoList" onclick="changeMemo('<%= i %>')">
+                            <%= user.memoList[i].title %>
+                        </h3><br>
                         <% } %>
-                </select>
+                </div>
             </div>
-
-
         </div>
         <div class="mdeContainer">
             <div class="headLine">
                 <h1>
-                    <%= user.memoList[Index].title %>
+                    <%= user.memoList[showing].title %>
                 </h1>
-                <h3 onclick="sendMD()" class="saveBtn">Save</h3>
-                <!-- <form action="/delMemo" method="post">
-                    <input type="text" name="<%= user.memoList[Index].title %>">
-                    <button type="submit">-</button>
-                </form> -->
+                <div class="headBtn">
+                    <h3 onclick="sendMD()" class="saveBtn">Save</h3>
+                    <h3 onclick="deleteMD()" class="saveBtn">Delete</h3>
+                </div>
             </div>
             <textarea id="editor"></textarea>
         </div>
@@ -201,21 +200,27 @@
             // fullscreen and sxs muss up layout
         });
 
-        let tmp = '<%= user.memoList[Index].value %>'
+        let tmp = '<%= user.memoList[showing].value %>'
         console.log(tmp)
         // tmp = tmp.replace(/<br\s*[\/]?>/gi, "\n")
         tmp = tmp.replace(/NextLineNextLine/g, "\n")
         tmp = tmp.replace(/HashHash/g, "#")
         tmp = tmp.replace(/NullNull/g, "")
         editMde.value(tmp);
-        
-        
-        // console.log(tmp)
-        
-        // tmp = tmp.replace(/\n/g, '<br>');
-        // editMde.value(tmp);
 
-        console.log('<%= user.memoList[Index]._id %>')
+        const changeMemo = (index) => {
+            console.log(index)
+            let url = `/changeShow/<%= user.name %>/${index}`;
+            console.log(url)
+            fetch(url, {
+                method: 'post',
+            })
+                .then(res => {
+                    location.reload()
+                })
+        }
+
+        console.log('<%= user.memoList[showing]._id %>')
 
         let data = editMde.value();
         function download(content, fileName, contentType) {
@@ -238,22 +243,47 @@
 
         const sendMD = () => {
             let sMD = editMde.value();
-            if(sMD == '') {
-                sMD = 'NullNull'; 
+            if (sMD == '') {
+                sMD = 'NullNull';
             }
             sMD = sMD.replace(/\n/g, 'NextLineNextLine');
             sMD = sMD.replace(/#/g, 'HashHash');
             console.log(sMD)
             // alert(sMD)
-            let url = `/uploadMD/<%= user.name %>/<%= user.memoList[Index].title %>/${sMD}`;
+            let url = `/uploadMD/<%= user.memoList[showing].title %>/${sMD}`;
             console.log(url)
             fetch(url, {
                 method: 'post',
                 body: sMD
             })
-            .then(res => {
-                alert("Save Complete")
+                .then(res => {
+                    alert("Save Complete")
+                    location.reload()
+                })
+        }
+        
+        console.log('<%= showing %>')
+        console.log('<%= showing-1 %>')
+
+        const deleteMD = () => {
+            let sMD = editMde.value();
+            if (sMD == '') {
+                sMD = 'NullNull';
+            }
+            sMD = sMD.replace(/\n/g, 'NextLineNextLine');
+            sMD = sMD.replace(/#/g, 'HashHash');
+            console.log(sMD)
+            // alert(sMD)
+            let url = `/deleteMD/<%= user.name %>/<%= user.memoList[showing]._id %>`;
+            console.log(url)
+            fetch(url, {
+                method: 'post'
             })
+                .then(res => {
+                    
+                    alert("Delete Complete")
+                    location.reload()
+                })
         }
 
     </script>
