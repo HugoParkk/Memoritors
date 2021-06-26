@@ -6,7 +6,7 @@ const editMde = new SimpleMDE({
     // guide implmentation is open to you
     // fullscreen and sxs muss up layout
 });
-editMde.value('# Sample Markdown\n- one\n- two\n- three');
+editMde.value('# Sample Markdown\\n- one\\n- two\\n- three');
 
 let data = editMde.value();
 

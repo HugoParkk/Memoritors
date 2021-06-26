@@ -17,8 +17,34 @@ router.get('/uploadImage', function(req,res){
 });
 
 router.post('/uploadImage/:name', _upload.single('attachment'), async (req,res) => { // 5
-  // res.render('confirmation', { file:req.file });
   User.updateOne({ name: req.params.name }, { profileImg: req.file.filename }, async (err, docs) => {
+    if(err) {
+      console.log(err)
+      res.json(err)
+    } else {
+      console.log("Updated Docs: ", docs);
+      res.redirect('/')
+    }
+  })
+});
+
+// router.post('/newMemo/:name', async (req,res) => { // 5
+//   User.updateOne({ name: req.params.name }, { memoList:  }, async (err, docs) => {
+//     if(err) {
+//       console.log(err)
+//       res.json(err)
+//     } else {
+//       console.log("Updated Docs: ", docs);
+//       res.redirect('/')
+//     }
+//   })
+// });
+
+router.post('/uploadMD/:name/:title/:data', async (req,res) => { // 5
+  // res.render('confirmation', { file:req.file });
+  console.log(req.params.name)
+  console.log(req.params.data)
+  User.updateOne({ 'memoList.title': req.params.title }, { 'memoList.$.value': req.params.data }, async (err, docs) => {
     if(err) {
       console.log(err)
       res.json(err)
