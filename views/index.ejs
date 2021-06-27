@@ -28,9 +28,8 @@
         }
 
         .mdeContainer {
-            /* display: inline-block; */
-            /* vertical-align: top; */
-            /* margin-left: 14vw; */
+            z-index: 1;
+            background-color: #ffffff;
             width: 100%;
         }
 
@@ -54,6 +53,7 @@
         .grid1 {
             width: 18vw;
             margin: 1vw 1vh;
+            transition: ease .5s;
         }
 
 
@@ -123,6 +123,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .headBtn {
             display: flex;
             flex-direction: row;
@@ -135,6 +136,20 @@
         .memoList:hover {
             background-color: #ddd;
         }
+
+        #sideBtn {
+            background-color: #aaa;
+            color: #535353;
+            transition: ease .5s;
+        }
+
+        @media screen and (max-width: 768px) {
+            .grid1 {
+                width: 100vw;
+                margin: 1vw 1vh;
+                transition: ease .5s;
+            }
+        }
     </style>
 
     <link rel="stylesheet" href="./style/common.css">
@@ -145,7 +160,7 @@
 <body>
     <div id="container">
         <div class="grid1">
-            <img id="profileImg" src="http://localhost:3000/uploadImage/<%= user.profileImg %> " alt="">
+            <img id="profileImg" src="/uploadImage/<%= user.profileImg %> " alt="">
             <p class="user">
                 <%= user.name %>
             </p>
@@ -170,18 +185,20 @@
                 <br>
                 <div id="memoList">
                     <% let i %>
-                    <% for (i=0; i < user.memoList.length; i++) { %>
-                        <h3 class="memoList" onclick="changeMemo('<%= i %>')">
-                            <%= user.memoList[i].title %>
-                        </h3><br>
-                        <% } %>
+                        <% for (i=0; i < user.memoList.length; i++) { %>
+                            <h3 class="memoList" onclick="changeMemo('<%= i %>')">
+                                <%= user.memoList[i].title %>
+                            </h3><br>
+                            <% } %>
                 </div>
             </div>
         </div>
         <div class="mdeContainer">
             <div class="headLine">
+
                 <h1>
-                    <%= user.memoList[showing].title %>
+                    <span onclick="sideBar(this)" id="sideBtn"><</span>
+                            <%= user.memoList[showing].title %>
                 </h1>
                 <div class="headBtn">
                     <h3 onclick="sendMD()" class="saveBtn">Save</h3>
@@ -192,6 +209,23 @@
         </div>
     </div>
     <script>
+        let isOpen = true;
+        const sideBar = (ele) => {
+            if (isOpen) {
+                ele.textContent = '>';
+                let sideBar = document.querySelector('.grid1');
+                sideBar.style.display = 'none';
+                isOpen = false;
+            } else {
+                ele.textContent = '<';
+                let sideBar = document.querySelector('.grid1');
+                sideBar.style.display = 'block';
+                isOpen = true;
+            }
+        }
+
+
+
         const editMde = new SimpleMDE({
             element: document.getElementById('editor'),
             spellChecker: false,
@@ -261,7 +295,7 @@
                     location.reload()
                 })
         }
-        
+
         console.log('<%= showing %>')
         console.log('<%= showing-1 %>')
 
@@ -280,7 +314,7 @@
                 method: 'post'
             })
                 .then(res => {
-                    
+
                     alert("Delete Complete")
                     location.reload()
                 })
