@@ -1,5 +1,5 @@
 const User = require("../models/user"); // 위에서 설계한 User 정보를 담기위한 document 모델
-const bcrypt = require("bcrypt"); // 유저가 입력한 password 를 암호화 하기 위한 알고리즘 라이브러리
+const bcrypt = require("bcryptjs"); // 유저가 입력한 password 를 암호화 하기 위한 알고리즘 라이브러리
 const jwt = require("jsonwebtoken");
 const path = require('path');
 
